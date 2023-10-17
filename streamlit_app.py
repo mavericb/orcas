@@ -13,7 +13,7 @@ if 'annotation_list' not in st.session_state:
     st.session_state['annotation_list'] = []
 
 # Load audio file
-file = st.file_uploader("Upload an audio file", type=["mp3"])
+file = st.file_uploader("Upload an audio file of orcas talking", type=["mp3"])
 if file is not None:
     st.session_state['file'] = file
 
@@ -24,8 +24,8 @@ if st.session_state['file'] is not None:
     st.audio(st.session_state['file'])
 
     # Annotate audio
-    start = st.slider("Start time", min_value=0, max_value=int(len(data)/sr))
-    end = st.slider("End time", min_value=start, max_value=int(len(data)/sr))
+    start = st.slider("Start time Annotation", min_value=0, max_value=int(len(data)/sr))
+    end = st.slider("End time Annotation", min_value=start, max_value=int(len(data)/sr))
     annotation = st.text_input("Annotation")
     if st.button("Submit"):
         new_annotation = pd.DataFrame({'Start': [start], 'End': [end], 'Annotation': [annotation]})
