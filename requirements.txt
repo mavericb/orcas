@@ -1,2 +1,3 @@
 matplotlib
 librosa
+numpy==1.25.0
