@@ -1,11 +1,9 @@
 import matplotlib.pyplot as plt
 import librosa.display
 import pandas as pd
-import datetime
 from pymongo import MongoClient
 import streamlit as st
 
-print(st.secrets.values())
 
 if 'file' not in st.session_state:
     st.session_state['file'] = None
