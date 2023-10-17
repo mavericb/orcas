@@ -1,20 +1,12 @@
-import streamlit as st
 import matplotlib.pyplot as plt
 import librosa.display
 import pandas as pd
 import datetime
 from pymongo import MongoClient
-
 import streamlit as st
-import os
 
-# Everything is accessible via the st.secrets dict:
-st.write("DB username:", st.secrets["db_username"])
-st.write("DB password:", st.secrets["db_password"])
-st.write("My cool secrets:", st.secrets["my_cool_secrets"]["things_i_like"])
+print(st.secrets.values())
 
-
-# Initialize session state
 if 'file' not in st.session_state:
     st.session_state['file'] = None
 if 'annotations' not in st.session_state:
