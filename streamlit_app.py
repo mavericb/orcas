@@ -3,6 +3,7 @@ import matplotlib.pyplot as plt
 import librosa.display
 import pandas as pd
 import datetime
+from pymongo import MongoClient
 
 # Initialize session state
 if 'file' not in st.session_state:
@@ -11,6 +12,11 @@ if 'annotations' not in st.session_state:
     st.session_state['annotations'] = pd.DataFrame(columns=['Start', 'End', 'Annotation'])
 if 'annotation_list' not in st.session_state:
     st.session_state['annotation_list'] = []
+
+# Initialize MongoDB client (replace 'mongodb_uri' with your MongoDB URI)
+client = MongoClient(st.secrets["mongodb_uri"])
+db = client[st.secrets["database"]]  # replace 'your_database' with your database name
+collection = db[st.secrets["collection"]]  # replace 'annotations' with your collection name
 
 # Load audio file
 file = st.file_uploader("Upload an audio file of orcas talking", type=["mp3"])
@@ -32,6 +38,9 @@ if st.session_state['file'] is not None:
         st.session_state['annotations'] = pd.concat([st.session_state['annotations'], new_annotation], ignore_index=True)
         st.session_state['annotation_list'].append((start, end, annotation))  # Add new annotation to the list
 
+        # Save annotation to MongoDB
+        collection.insert_one({'Start': start, 'End': end, 'Annotation': annotation})
+
     # Display waveform and add all annotations to the plot
     fig, ax = plt.subplots(figsize=(14, 5))
     librosa.display.waveshow(data, sr=sr, ax=ax)
@@ -44,10 +53,3 @@ if st.session_state['file'] is not None:
 
     # Display annotations
     st.write(st.session_state['annotations'])
-
-    # Export annotations
-    if st.button("Upload annotations"):
-        timestamp = datetime.datetime.now().strftime("%Y%m%d-%H%M%S")
-        filename = f"annotations_{st.session_state['file'].name}_{timestamp}.csv"
-        st.session_state['annotations'].to_csv(filename, index=False)
-        st.success(f"Annotations uploaded successfully! The file is saved as {filename}")
