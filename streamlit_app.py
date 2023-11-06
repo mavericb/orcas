@@ -11,12 +11,6 @@ if 'annotations' not in st.session_state:
 if 'annotation_list' not in st.session_state:
     st.session_state['annotation_list'] = []
 
-# mongodb_uri = "mongodb+srv://user231:chiccone93@cluster0.twbuy.mongodb.net/?retryWrites=true&w=majority"
-# client = MongoClient(mongodb_uri)
-# database = "orcas"
-# db = client[database]
-# collection = db["annotations"]
-
 # # Initialize MongoDB client (replace 'mongodb_uri' with your MongoDB URI)
 client = MongoClient(st.secrets["mongodb_uri"])
 db = client[st.secrets["database"]]  # replace 'your_database' with your database name
