@@ -17,4 +17,4 @@ Click on the image below to access the web application:
 
 ## Jupyter Notebook
 
-A Jupyter notebook with the analysis is also available in this repository
+A Jupyter notebook is also available [Download the notebook](https://github.com/orcasbridge/project/raw/main/analysis.ipynb)
